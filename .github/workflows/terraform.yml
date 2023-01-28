@@ -53,7 +53,7 @@ env:
   project_id: ${{secrets.project_id}}
   private_key_id: ${{secrets.private_key_id}}
   private_key: ${{secrets.private_key}}
-  ROOT_PATH: '${{ github.workspace }}/Src/terraform'
+  ROOT_PATH: '${{ github.workspace }}/terraform'
 
 permissions:
   contents: read
@@ -82,12 +82,23 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config=state-lock-config-qa.properties -reconfigure
+      working-directory: ${{env.ROOT_PATH}}
+
+      # Select the workspace of your choice.
+    - name: Select Terraform workspace
+      run: terraform workspace new qa;terraform workspace select qa
       working-directory: ${{env.ROOT_PATH}}
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
+      working-directory: ${{env.ROOT_PATH}}
+
+    # Validates the Terraform code.
+    - name: Terraform Validate
+      run: terraform validate
+      working-directory: ${{env.ROOT_PATH}}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
