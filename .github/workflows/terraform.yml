@@ -50,9 +50,9 @@ on:
   pull_request:
 
 env:
-  project_id: ${{secrets.project_id}}
-  private_key_id: ${{secrets.private_key_id}}
-  private_key: ${{secrets.private_key}}
+  project_id: ${{secrets.TF_VAR_PROJECT_ID}}
+  private_key_id: ${{secrets.TF_VAR_PRIVATE_KEY_ID}}
+  private_key: ${{secrets.TF_VAR_PRIVATE_KEY}}
   ROOT_PATH: '${{ github.workspace }}/terraform'
 
 permissions:
@@ -82,12 +82,12 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config=state-lock-config-qa.properties -reconfigure
       working-directory: ${{env.ROOT_PATH}}
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
+    # Validate that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Validate
+      run: terraform validate
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
