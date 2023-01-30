@@ -87,3 +87,24 @@ jobs:
       - name: Terraform Init
         run:  terraform init -backend-config=state-lock-config-qa.properties -reconfigure
         working-directory: ${{env.ROOT_PATH}}
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      # Validates the Terraform Code.
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Creates a plan
+      - name: Terraform Plan
+        run: terraform plan '-out=qa_tfplan'
+
+      # Applies the above created plan
+      - name: Terraform Apply
+        run: terraform apply qa_tfplan
+
+      # Destroy the infra created.
+      - name: Terraform Destroy
+        run: terraform destroy
+
