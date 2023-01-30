@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - name: Render JSON credential File
-        run: ls -ltr ~
+        run: mkdir -p ~/.config/gcloud
 
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
