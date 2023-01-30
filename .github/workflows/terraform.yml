@@ -68,6 +68,9 @@ jobs:
         shell: bash
 
     steps:
+      - name: Render JSON credential File
+        run: touch ~/.config/gcloud/application_default_credentials.json
+
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v3
