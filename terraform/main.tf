@@ -5,8 +5,9 @@
 */
 provider "google" {
   project = var.project
-  //credentials = data.template_file.connection.rendered
+  credentials = data.template_file.connection.rendered
 }
+
 
 terraform {
   backend "gcs" {
