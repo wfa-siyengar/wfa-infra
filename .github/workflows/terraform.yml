@@ -61,6 +61,10 @@ jobs:
         shell: bash
 
     steps:
+      - name: checkout
+        id: checkout_code
+        uses: actions/checkout@v3
+
       - name: Set GCP environment
         id: set_gcp_env
         run: echo ::set-env name=BRANCH_NAME::$(echo ${GITHUB_BASE_REF#refs/heads/})
@@ -73,6 +77,4 @@ jobs:
           service_account_email: ${{ secrets.GCP_SA_EMAIL }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
 
-      - name: checkout
-        id: checkout_code
-        uses: actions/checkout@v3
+
