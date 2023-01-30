@@ -75,7 +75,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: 'SA Setup'
+      - name: 'Setting up GCP account Connection'
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
@@ -83,3 +83,7 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
 
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run:  terraform init -backend-config=state-lock-config-qa.properties -reconfigure
+        working-directory: ${{env.ROOT_PATH}}
