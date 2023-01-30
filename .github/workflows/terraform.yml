@@ -98,6 +98,11 @@ jobs:
 
       # Creates a plan
       - name: Terraform Plan
+        run: force-unlock --force 1675079498172257
+        working-directory: ${{env.ROOT_PATH}}
+
+      # Creates a plan
+      - name: Terraform Plan
         run: terraform plan '-out=qa_tfplan'
         working-directory: ${{env.ROOT_PATH}}
 
