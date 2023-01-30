@@ -68,9 +68,6 @@ jobs:
         shell: bash
 
     steps:
-      - name: Render JSON credential File
-        run: mkdir -p ~/.config/gcloud/ && touch ~/.config/gcloud/application_default_credentials.json
-
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v3
@@ -78,6 +75,9 @@ jobs:
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+
+      - name: Render JSON credential File
+        run: sh ./init.sh
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
