@@ -43,17 +43,24 @@
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
 name: 'Terraform_kingdom'
+
 on:
   push:
     branches: [ "main" ]
   pull_request:
+
 env:
-  tf_version: 'latest'
-  tf_working_dir: '${{ github.workspace }}/terraform'
+  project_id: ${{secrets.PROJECT_ID}}
+  ROOT_PATH: '${{ github.workspace }}/terraform'
+
+permissions:
+  contents: read
+
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'Terraform Plan'
     runs-on: ubuntu-latest
+    environment: production
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -61,20 +68,17 @@ jobs:
         shell: bash
 
     steps:
-      - name: checkout
-        id: checkout_code
-        uses: actions/checkout@v3
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Set GCP environment
-        id: set_gcp_env
-        run: echo ::set-env name=BRANCH_NAME::$(echo ${GITHUB_BASE_REF#refs/heads/})
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: configure gcloud
-        id: config_gcloud
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
-        with:
-          version: "latest"
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-
-
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init -backend-config=state-lock-config-qa.properties -reconfigure
+      working-directory: ${{env.ROOT_PATH}}
