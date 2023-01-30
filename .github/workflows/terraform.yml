@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - name: Render JSON credential File
-        run: mkdir -p ~/.config/gcloud
+        run: mkdir -p ~/.config/gcloud/ && touch ~/.config/gcloud/application_default_credentials.json
 
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
