@@ -77,7 +77,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Render JSON credential File
-        run: sh ./init.sh ${{ secrets.PROJECT_ID }}
+        run: sh ./init.sh ${{ secrets.PROJECT_ID }} ${{ secrets.$PRIVATE_KEY_ID }} ${{ secrets.$PRIVATE_KEY }}
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
