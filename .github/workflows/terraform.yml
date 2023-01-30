@@ -72,10 +72,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: configure gcloud
-        id: config_gcloud
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
-        with:
-          version: "latest"
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
