@@ -50,9 +50,6 @@ on:
   pull_request:
 
 env:
-  PROJECT_ID: ${{secrets.PROJECT_ID}}
-  PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
-  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
   ROOT_PATH: '${{ github.workspace }}/terraform'
 
 permissions:
