@@ -107,6 +107,6 @@ jobs:
         working-directory: ${{env.ROOT_PATH}}
 
       # Destroy the infra created.
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
-        working-directory: ${{env.ROOT_PATH}}
+      #- name: Terraform Destroy
+      #  run: terraform destroy -auto-approve
+      #  working-directory: ${{env.ROOT_PATH}}
