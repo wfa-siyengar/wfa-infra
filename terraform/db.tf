@@ -1,5 +1,5 @@
 resource "google_spanner_instance" "main" {
-  config       = "us-central1-a"
+  config       = "regional-us-central1"
   display_name = "kingdom_spanner"
   num_nodes    = 1
 }
