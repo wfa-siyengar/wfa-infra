@@ -1,7 +1,3 @@
-provider "google" {
-  project = var.project_id
-  zone = var.zone
-}
 resource "google_kms_key_ring" "default" {
   name = var.ring_name
   location = var.ring_location
@@ -18,10 +14,3 @@ data "google_iam_policy" "default" {
     role = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   }
 }
-output "keyring" {
-  value = google_kms_key_ring.default.self_link
-}
-output "kmskey" {
-  value = google_kms_crypto_key.default.self_link
-}
-
