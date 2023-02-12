@@ -23,6 +23,29 @@ variable projectName {
   description = "The IAC project of WFA "
 }
 
+variable node_version {
+  default = "1.10.6-gke.11"
+  description = "version of the GKE cluster"
+}
+
+variable min_master_version {
+  default = "1.10.9-gke.5"
+  description = "version of the GKE cluster"
+}
+
+
+variable db_user {
+  default = "Admin"
+  description = "DB user name"
+}
+
+variable db_password {
+  default = "test"
+  description = "password"
+}
+
+
+ 
 variable env {
   default = "dev"
   description = "Represents the environment used."
@@ -36,4 +59,21 @@ variable region {
 variable project {
   default = "my-project-test-373810"
   description = "The project ID"
+}
+
+variable "project_id" {
+  type = string
+  description = "Project ID"
+}
+variable "zone" {
+  type = string
+  description = "zone for resoruces"
+}
+variable "ring_name" {
+  type = string
+  description = "KMS key ring name"
+}
+variable "ring_location" {
+  type = string
+  description = "Key ring location "
 }
